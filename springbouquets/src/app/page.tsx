@@ -27,10 +27,16 @@ const getFirstUser = async (setFunction?: () => void | null) => {
 
 export default function Home() {
     useEffect(() => {
-        (async () => {
-            const user = await getFirstUser();
-            console.log(user);
-        })();
+            getFirstUser().then(user => {
+                if (user && !user.error) {
+                    console.log(user);
+                } else {
+                    console.log(user.error);
+                }
+            }).catch(err => {
+                // Burası sadece network/JS error için
+                console.error(err);
+            });
     }, []);
 
     return (

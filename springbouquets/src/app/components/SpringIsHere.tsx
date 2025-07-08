@@ -29,8 +29,8 @@ const SpringIsHere = () => {
 
     return (<div style={BAHARGELDI}>
         <div className={"mb-4"}>
-            <p style={{textShadow: "1px 1px 1px rgba(150, 150, 150, 0.25)"}} className={`text-black text-shadow  text-3xl
-                ${madeForItalic.className} mb-8`}>Bahara renkli bir buket ile adım atın</p>
+            <p style={{textShadow: "1px 1px 1px rgba(150, 150, 150, 0.25)"}} className={`text-black text-shadow  text-2xl
+                ${madeForItalic.className} mb-8`}>Step into spring with a colorful bouquet</p>
             <div className="w-[4rem] bg-gray-700 h-[1px]"></div>
         </div>
 
