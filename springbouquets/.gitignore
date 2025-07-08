@@ -4,6 +4,7 @@ prisma/migrations
 # dependencies
 /node_modules
 /.pnp
+.idea
 .pnp.*
 .yarn/*
 !.yarn/patches
