@@ -35,19 +35,18 @@ const SpringIsHere = () => {
         </div>
 
         <div className="w-fit">
-            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>BAHAR</h1>
+            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>SPR-</h1>
             <div className="w-full bg-gray-200 h-[1px]"></div>
         </div>
         <div className="w-fit">
-            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>GEL-</h1>
+            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>ING IS</h1>
             <div className="w-full bg-gray-200 h-[1px]"></div>
         </div>
         <div className="w-fit">
-            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>DI</h1>
+            <h1 style={{fontSize: "5rem"}} className={"text-gray-200"}>HERE</h1>
             <div className="w-full bg-gray-200 h-[1px]"></div>
         </div>
-        <button className={`${madeForItalic.className} w-fit p-2 text-base mt-4 rounded-sm bg-green-800`}>Şimdi satın
-            al
+        <button className={`${madeForItalic.className} w-fit p-2 pl-8 pr-8 text-base mt-4 rounded-sm bg-green-800`}>Shop_Now
         </button>
     </div>)
 }

@@ -1,72 +1,74 @@
 import {PrismaClient} from "../../../../generated/prisma/client";
+
 const prisma = new PrismaClient();
 
 
-async function GetUser(request) {
+async function GetBouquet(request) {
     const url = new URL(request.url);
     const searchParams = url.searchParams;
 
-    try{
+    try {
         const id = Number(searchParams.get("id"));
-        const name = searchParams.get("name");
-        let user;
-        if (id && !isNaN(id)){
-            user = await prisma.user.findFirst({where:{id: id}})
-        }else if (name){
-            user = await prisma.user.findFirst({where:{name: name}})
-        }else {
-            return Response.json({error: "Send proper info!"}, {
+        const title = searchParams.get("title");
+        let bouquet;
+        if (id && !isNaN(id)) {
+            bouquet = await prisma.bouquet.findFirst({where: {id: id}})
+        } else if (title) {
+            bouquet = await prisma.bouquet.findFirst({where: {title: title}})
+        } else {
+            return Response.json({error: "Bouquet not found"}, {
                 status: 404
             });
         }
-        if (user){
-            console.log(user || "THERE IS NO USER!");
-            return Response.json(user, {
+        if (bouquet) {
+            console.log(bouquet || "THERE IS NO USER!");
+            return Response.json(bouquet, {
                 status: 200
             });
-        }else {
+        } else {
             return Response.json({error: "User not found"}, {
                 status: 404
             });
         }
 
-    }catch (e){
+    } catch (e) {
         return Response.json({"error": e}, {
             status: 404
         });
     }
 
 }
-async function UpdateUser(request) {
+
+async function UpdateBouquet(request) {
     const body = await request.json();
-    const email = body.email;
-    try{
-        const user = await prisma.user.upsert({
-            where: { email: email },
+    const title = body.title;
+    try {
+        const bouquet = await prisma.bouquet.upsert({
+            where: {title: body.title},
             update: body,
             create: body,
         });
-        return Response.json(user, { status: 200 });
-    }catch (e){
+        return Response.json(bouquet, {status: 200});
+    } catch (e) {
         return Response.json({error: e}, {
             status: 500
         })
     }
 }
 
-async function DeleteUser(request) {
+export async function DeleteBouquet(request) {
     try {
         const {searchParams} = new URL(request.url);
-        const email = searchParams.get('email');
+        const title = searchParams.get('title');
         const id = Number(searchParams.get("id"));
         let deleted;
         if (id) {
-            deleted = await prisma.user.delete({
+            deleted = await prisma.bouquet.delete({
                 where: {id},
             });
-        } else if (email) {
-            deleted = await prisma.user.delete({
-                where: {email},
+        } else if (title) {
+            deleted = await prisma.bouquet.delete({
+                where: {title},
             });
         } else {
             return Response.json({error: "Send proper info!"}, {
@@ -74,7 +76,7 @@ async function DeleteUser(request) {
             });
         }
         return Response.json(
-            {message: "User is deleted!", user: deleted},
+            {message: "Bouquet is deleted!", bouquet: deleted},
             {status: 200}
         );
     } catch (e) {
@@ -85,9 +87,7 @@ async function DeleteUser(request) {
     }
 }
 
-
-
-export {GetUser as GET, UpdateUser as POST, DeleteUser as DELETE}
+export {GetBouquet as GET, UpdateBouquet as POST, DeleteBouquet as DELETE}
 
 
 

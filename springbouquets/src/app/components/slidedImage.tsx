@@ -53,7 +53,7 @@ const SlidedImage = () => {
         }
         console.log(slideImages)
     }, []);
-    return <div style={{height: "70vh", zIndex: 0, width: "100%"}}>
+    return <div style={{height: "70vh", zIndex: 0, width: "100%", marginBottom: "4rem"}}>
         <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
             <Slide autoplay={true} transitionDuration={1000} duration={5000} infinite={true} canSwipe={true}>
                 {slideImages.map((slideImage, index) => (
