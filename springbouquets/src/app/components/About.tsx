@@ -18,7 +18,7 @@ const About = () => {
                 illo laboriosam maiores maxime minus neque nisi officia sint ut voluptatem. Hic.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus ea esse laboriosam laudantium molestias porro repudiandae rerum, tempora voluptate voluptatem?
                 Aliquam beatae blanditiis consectetur dolores et maxime odio, quisquam voluptate?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus ea esse laboriosam laudantium molestias porro repudiandae rerum, tempora voluptate voluptatem?
+            <p className={"mb-[8rem]"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus ea esse laboriosam laudantium molestias porro repudiandae rerum, tempora voluptate voluptatem?
                 Aliquam beatae blanditiis consectetur dolores et maxime odio, quisquam voluptate?</p>
         </div>
     </div>

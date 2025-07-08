@@ -57,8 +57,9 @@ const SlidedImage = () => {
         <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>
             <Slide autoplay={true} transitionDuration={1000} duration={5000} infinite={true} canSwipe={true}>
                 {slideImages.map((slideImage, index) => (
-                    <div key={index}> {/*bg-[url('${slideImage.url}')]*/}
+                    <div key={index}>
                         <div style={{
+                            backgroundAttachment: "fixed",
                             backgroundImage: `url(${slideImage.url.src})`,
                             width: "100%",
                             height: "100vh",
