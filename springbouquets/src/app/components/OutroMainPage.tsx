@@ -43,7 +43,7 @@ const OutroMainPage = () => {
                 <div style={{lineHeight: "1.6rem"}} className={`w-full text-sm ${madeForItalic.className}`}>
                     <p>Sign up for our newsletter</p>
                     <div className={"w-full flex flex-row items-center justify-center"}>
-                        <input className={"border h-8 mr-4 w-50"}/>
+                        <input className={"border rounded-md h-8 mr-4 w-50 pl-2"}/>
                         <button
                             className={`${madeForItalic.className} w-20 text-base flex justify-center items-center h-8  text-white w-fit p-2 pl-4 pr-4 rounded-sm bg-[rgb(0,50,0)]`}>
                             <p>JOIN_NOW</p>
