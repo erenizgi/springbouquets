@@ -5,6 +5,8 @@ import Login from "@/app/components/Login";
 import About from "@/app/components/About";
 import BouquetsSummary from "@/app/components/BouquetsSummary";
 import {useEffect} from "react";
+import OurWorkshops from "@/app/components/OurWorkshops";
+import OutroMainPage from "@/app/components/OutroMainPage";
 
 const madeForItalic = localFont({
     src: "fonts/WixMadeforText-VariableFont_wght.ttf",
@@ -34,7 +36,6 @@ export default function Home() {
                     console.log(user.error);
                 }
             }).catch(err => {
-                // Burası sadece network/JS error için
                 console.error(err);
             });
     }, []);
@@ -45,6 +46,8 @@ export default function Home() {
             <SlidedImage/>
             <About></About>
             <BouquetsSummary></BouquetsSummary>
+            <OurWorkshops></OurWorkshops>
+            <OutroMainPage></OutroMainPage>
         </div>
     );
 }
