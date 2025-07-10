@@ -15,18 +15,18 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String?
-  picturePath String?
-  cart Json @default("{}")
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  cart      Json     @default("{}")
   createdAt DateTime @default(now())
 }
 
 model Bouquet {
-  id Int @id @default(autoincrement())
-  title String @unique
-  price Float?
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  price       Float?
+  picturePath String?
+  description String?
+  createdAt   DateTime @default(now())
 }
-

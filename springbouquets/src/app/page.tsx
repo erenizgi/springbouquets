@@ -4,7 +4,7 @@ import SlidedImage from "@/app/components/slidedImage";
 import Login from "@/app/components/Login";
 import About from "@/app/components/About";
 import BouquetsSummary from "@/app/components/BouquetsSummary";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import OurWorkshops from "@/app/components/OurWorkshops";
 import OutroMainPage from "@/app/components/OutroMainPage";
 
@@ -28,6 +28,9 @@ const getFirstUser = async (setFunction?: () => void | null) => {
 
 
 export default function Home() {
+    const [isAdmin, setAdmin] = useState(true);
+
+
     useEffect(() => {
             getFirstUser().then(user => {
                 if (user && !user.error) {
@@ -42,7 +45,7 @@ export default function Home() {
 
     return (
         <div>
-            <Login customStyle={{position: "fixed", zIndex: "100"}}></Login>
+            <Login customStyle={{position: "fixed", zIndex: "500"}} isAdmin={isAdmin}></Login>
             <SlidedImage/>
             <About></About>
             <BouquetsSummary></BouquetsSummary>
