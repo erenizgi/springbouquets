@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 type AddProductTypes = {
     inputClass: string;
@@ -28,6 +28,11 @@ const AddProduct = ({
                         description,
                         setDescription
                     }: AddProductTypes) => {
+
+    useEffect(() => {
+        console.log(imgUrl);
+    }, []);
+    
     return <div className={"flex flex-col border-r p-8 pt-12 w-[50%] h-[80%]"}>
         <h2 className={"text-3xl mb-8"}>Add Product</h2>
         <div className={"w-full p-3 flex flex-row w-full gap-10 h-fit"}>
@@ -68,11 +73,13 @@ const AddProduct = ({
 
             </div>
             <div
-                className={"ease-in-out transition duration-300 hover:scale-102 border h-[100%] w-60 flex items-center justify-center rounded-lg"}
+                // @ts-ignore
+                style={{border: imgUrl === null ? "1px solid rgba(0,0,0,0.5)" : null}}
+                className={`ease-in-out transition duration-300 hover:scale-102 h-[100%] w-[40%] flex items-center justify-center rounded-lg`}
                 onClick={handleFrameClick}>
                 {imgUrl ? (
                     <img width={60} height={60} src={imgUrl} alt="Önizleme"
-                         style={{objectFit: "cover", width: "100%", height: "100%"}}></img>
+                         style={{objectFit: "cover", width: "100%", height: "100%", borderRadius: "0.5rem"}}></img>
                 ) : (
                     <span className="text-gray-400">+ Add Photo</span>
                 )}
