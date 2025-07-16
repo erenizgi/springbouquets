@@ -13,6 +13,9 @@ type AddProductTypes = {
     description: string;
     setDescription: (description: string) => void;
 }
+const floatRegex = /^-?\d*\.\d+$/;
+
+
 
 
 const AddProduct = ({
@@ -26,7 +29,8 @@ const AddProduct = ({
                         inputRef,
                         handleFileChange,
                         description,
-                        setDescription
+                        setDescription,
+                        submit
                     }: AddProductTypes) => {
 
     useEffect(() => {
@@ -50,8 +54,11 @@ const AddProduct = ({
                     <div className={"flex items-center"}>
                         <h3 className={"w-15 text-xl border-r-1 p-1"}>Price</h3>
                     </div>
-                    <input placeholder={"enter a price..."} className={inputClass} type={"number"}
-                           onChange={(e) => setPrice(e.target.value)}
+                    <input placeholder={"enter a price..."} className={inputClass} type={"number"} step="any"
+                           onChange={(e) => {
+                               setPrice(e.target.value);
+
+                           }}
                            value={price}/>
                 </div>
                 <div className={"w-[100%] bg-black h-[1px] mb-2"}></div>
@@ -67,6 +74,7 @@ const AddProduct = ({
 
                 <div className={"w-full pl-24 pr-24 m-0 flex items-end justify-start flex-1"}>
                     <button
+                        onClick={submit}
                         className={"hover:bg-[rgb(0,70,50)] ease-in-out hover:scale-105 transition duration-350 h-12 w-full rounded-lg text-white align-top bg-[rgb(0,50,0)]"}>CREATE_NOW
                     </button>
                 </div>

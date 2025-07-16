@@ -1,9 +1,11 @@
 import {PrismaClient} from "../../../../generated/prisma/client";
+import { promises as fs } from 'fs';
+import path from "path";
 
 const prisma = new PrismaClient();
 
 
-async function GetBouquet(request) {
+export async function GetBouquet(request) {
     const url = new URL(request.url);
     const searchParams = url.searchParams;
 
@@ -12,47 +14,54 @@ async function GetBouquet(request) {
         const title = searchParams.get("title");
         let bouquet;
         if (id && !isNaN(id)) {
-            bouquet = await prisma.bouquet.findFirst({where: {id: id}})
+            bouquet = await prisma.bouquet.findFirst({ where: { id: id } });
+            if (!bouquet) throw "Bouquet not found";
         } else if (title) {
-            bouquet = await prisma.bouquet.findFirst({where: {title: title}})
+            bouquet = await prisma.bouquet.findFirst({ where: { title: title } });
+            if (!bouquet) throw "Bouquet not found";
         } else {
-            return Response.json({error: "Bouquet not found"}, {
-                status: 404
-            });
-        }
-        if (bouquet) {
-            console.log(bouquet || "THERE IS NO USER!");
-            return Response.json(bouquet, {
-                status: 200
-            });
-        } else {
-            return Response.json({error: "User not found"}, {
-                status: 404
-            });
+            bouquet = await prisma.bouquet.findMany({take: 50});
+            if (!bouquet || bouquet.length === 0) throw "Bouquet not found";
         }
 
+        return Response.json(bouquet, { status: 200 });
     } catch (e) {
-        return Response.json({"error": e}, {
-            status: 404
-        });
+        return Response.json({ error: String(e) }, { status: 404 });
     }
-
 }
 
 async function UpdateBouquet(request) {
-    const body = await request.json();
-    const title = body.title;
+    const formData = await request.formData();
+    const title = formData.get('title');
+    const price = formData.get('price');
+    const description = formData.get('description');
+    const imageFile = formData.get('image');
+    let imagePath = null;
+    if (imageFile && typeof imageFile.arrayBuffer === "function") {
+        const buffer = Buffer.from(await imageFile.arrayBuffer());
+        const fileName = `${Date.now()}-${imageFile.name}`;
+
+        const uploadDir = path.join(process.cwd(), '/public/uploads');
+        await fs.mkdir(uploadDir, { recursive: true });
+        const filePath = path.join(uploadDir, fileName);
+        await fs.writeFile(filePath, buffer);
+        imagePath = `/uploads/${fileName}`;
+    }
+    console.log("qwgqgqwgg");
+    const body = {
+        title, price: Number(price), description,
+        image: imagePath,
+    };
+
     try {
         const bouquet = await prisma.bouquet.upsert({
-            where: {title: body.title},
+            where: { title: title },
             update: body,
             create: body,
         });
-        return Response.json(bouquet, {status: 200});
+        return Response.json(bouquet, { status: 200 });
     } catch (e) {
-        return Response.json({error: e}, {
-            status: 500
-        })
+        return Response.json({ error: e.toString() }, { status: 500 });
     }
 }
 

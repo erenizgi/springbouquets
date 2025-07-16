@@ -21,8 +21,12 @@ const Login = ({customStyle, isAdmin} : LoginProps) => {
         router.push("/Admin");
     }
 
+    const mainPageRouteHandler = () => {
+        router.push("/")
+    }
+
     return <div className={"w-full flex flex-row items-center justify-end"} style={{...customStyle, background: "white", padding: "1rem", paddingLeft: "2rem", paddingTop: "1.5rem"}}>
-        <div className={"w-[10%] box-border"}>
+        <div className={"w-[10%] box-border"} onClick={mainPageRouteHandler}>
             <Image className={"h-12 w-auto"} src={flower_icon} alt={"flower-icon"}></Image>
         </div>
         <div className={"w-[90%] flex flex-row items-center justify-end"}>
