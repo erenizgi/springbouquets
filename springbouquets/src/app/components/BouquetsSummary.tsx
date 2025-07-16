@@ -39,7 +39,7 @@ const BouquetsSummary = ({bouquets}) => {
                 <h2 className={`text-xl mb-4 ${madeForItalic.className}`}>I&#39;m just little title. Add your own text.</h2>
             </div>
 
-            <div className={"grid grid-cols-4 gap-4 w-[1600px]"}>
+            <div className={"grid grid-cols-4 gap-16 w-[1600px]"}>
                 {shuffle(bouquets).map((bouquet) => <BouquetCard key={bouquet.title} bouquet={bouquet}></BouquetCard>)}
                 {shuffle(bouquets).map((bouquet) => <BouquetCard key={bouquet.title} bouquet={bouquet}></BouquetCard>)}
                 {shuffle(bouquets).map((bouquet) => <BouquetCard key={bouquet.title} bouquet={bouquet}></BouquetCard>)}

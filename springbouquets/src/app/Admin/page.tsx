@@ -3,6 +3,7 @@ import Login from "@/app/components/Login";
 import React, {useEffect, useRef, useState} from "react";
 import Image from "next/image";
 import AddProduct from "@/app/Admin/components/AddProduct";
+import EditProducts from "@/app/Admin/components/EditProducts";
 
 type AdminProps = {
     isAdmin?: boolean;
@@ -10,6 +11,18 @@ type AdminProps = {
 
 const inputClass = "w-[90%] p-3 pl-3 rounded-lg outline-none";
 
+const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]) | {}[])) => void) => {
+    try{
+        const response = await fetch("/api/bouquet");
+
+        const parsed = await response.json();
+        if (setBouquets) {
+            setBouquets(parsed);
+        }
+    }catch (e){
+        console.log(e)
+    }
+}
 
 
 
@@ -21,7 +34,7 @@ const Admin = ({isAdmin}: AdminProps) => {
     const [file, setFile] = useState<File | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [description, setDescription] = useState<string>("")
-
+    const [allBouquets, setAllBouquets] = useState<{}[]>([])
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target?.files[0]) {
             setFile(e.target?.files[0]);
@@ -84,9 +97,18 @@ const Admin = ({isAdmin}: AdminProps) => {
         setImgUrl(url);
     };
 
-    return <div className={"flex flex-col w-screen h-screen bg-slate-100"}>
+    useEffect(() => {
+        (async () => {
+            await fetch50Bouquets(setAllBouquets)
+        })();
+    }, []);
+
+    return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
         <Login customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin}></Login>
-        <AddProduct submit={handleSubmit} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
+        <div className={"flex flex-row h-full"}>
+            <AddProduct submit={handleSubmit} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
+            <EditProducts bouquets={allBouquets}></EditProducts>
+        </div>
 
 
     </div>
