@@ -12,10 +12,9 @@ type AddProductTypes = {
     inputRef: React.RefObject<HTMLInputElement | null>;
     description: string;
     setDescription: (description: string) => void;
+    submit: () => void;
 }
 const floatRegex = /^-?\d*\.\d+$/;
-
-
 
 
 const AddProduct = ({
@@ -66,9 +65,11 @@ const AddProduct = ({
                     <div className={"flex items-center"}>
                         <h3 className={"w-30 text-xl p-1 mb-2"}>Description</h3>
                     </div>
-                    <textarea placeholder={"...description"} className={"w-[100%] h-90 text-top p-3 pl-3 outline-none border-b-1 border-t-1 border-[rgba(0,0,0,.1)] resize-none rounded-lg mb-8"} type={"text"}
-                           onChange={(e) => setDescription(e.target.value)}
-                           value={description}/>
+                    <textarea
+                        placeholder={"...description"} className={"w-[100%] h-90 text-top p-3 pl-3 outline-none border-b-1 border-t-1 border-[rgba(0,0,0,.1)] resize-none rounded-lg mb-8"}
+                        type={"text"}
+                        onChange={(e) => setDescription(e.target.value)}
+                        value={description}/>
                 </div>
 
 

@@ -32,7 +32,10 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]
 
         const parsed = await response.json();
         if (setBouquets) {
-            setBouquets(parsed);
+            if (parsed?.error) setBouquets([]);
+            else {
+                setBouquets([...parsed, ...parsed, ...parsed]);
+            }
         }
     }catch (e){
         console.log(e)
@@ -55,6 +58,7 @@ export default function Home() {
     useEffect(() => {
         console.log(bouquets);
     }, [bouquets]);
+
 
     return (
         <div>

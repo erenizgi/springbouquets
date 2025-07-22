@@ -11,14 +11,16 @@ type AdminProps = {
 
 const inputClass = "w-[90%] p-3 pl-3 rounded-lg outline-none";
 
-const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]) | {}[])) => void) => {
+const fetch50Bouquets = async (setBouquets?: (value: (((prevState: object[]) => object[]) | object[])) => void) => {
     try{
         const response = await fetch("/api/bouquet");
 
         const parsed = await response.json();
         if (setBouquets) {
-            setBouquets(parsed);
+            if (parsed?.error) setBouquets([]);
+            else setBouquets([...parsed]);
         }
+        console.log("SET!!")
     }catch (e){
         console.log(e)
     }
@@ -49,6 +51,7 @@ const Admin = ({isAdmin}: AdminProps) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log("l1kşwgwqlkng")
 
         if (!title || !price) {
             console.log("Fill the title and price!");
@@ -84,6 +87,7 @@ const Admin = ({isAdmin}: AdminProps) => {
             setPrice("");
             setDescription("");
             if (inputRef.current) inputRef.current.value = "";
+            await fetch50Bouquets(setAllBouquets);
         } catch (e) {
             console.log("Bir hata oluştu: " + e);
         }
@@ -106,8 +110,10 @@ const Admin = ({isAdmin}: AdminProps) => {
     return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
         <Login customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin}></Login>
         <div className={"flex flex-row h-full"}>
-            <AddProduct submit={handleSubmit} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
-            <EditProducts bouquets={allBouquets}></EditProducts>
+            <AddProduct submit={async (e: React.FormEvent<Element>) => {
+                await handleSubmit(e)
+            }} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
+            <EditProducts fetchBouquets={async () => await fetch50Bouquets(setAllBouquets)} bouquets={allBouquets}></EditProducts>
         </div>
 
 
