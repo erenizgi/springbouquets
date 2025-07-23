@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import localFont from "next/font/local";
 import BouquetCard from "@/app/components/BouquetCard";
+import {Bouquet} from "@/types/page"
 
 const madeForItalic = localFont({
     src: "../fonts/WixMadeforText-Italic-VariableFont_wght.ttf",
@@ -26,13 +27,6 @@ function shuffle(array: Bouquet[]) {
     return arrayCopy;
 }
 
-type Bouquet = {
-    id: number;
-    title: string;
-    price: number;
-    image: string;
-    description: string;
-}
 
 type BouquetSummaryProps = {
     bouquets: Bouquet[];

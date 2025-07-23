@@ -7,12 +7,13 @@ import BouquetsSummary from "@/app/components/BouquetsSummary";
 import {useEffect, useState} from "react";
 import OurWorkshops from "@/app/components/OurWorkshops";
 import OutroMainPage from "@/app/components/OutroMainPage";
+import LoginPopUp from "@/app/components/LoginPopUp";
+import { motion } from "motion/react";
 
 export const madeForItalic = localFont({
     src: "fonts/WixMadeforText-VariableFont_wght.ttf",
     weight: "100",
 });
-
 const getFirstUser = async (setFunction?: () => void | null) => {
     const url = "/api/user";
     const response = await fetch(url,   {
@@ -49,6 +50,7 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]
 export default function Home() {
     const [isAdmin, setAdmin] = useState(true);
     const [bouquets, setBouquets] = useState<{}[]>([])
+    const [loginPopUpOpen, setLoginPopUpOpen] = useState<boolean>(false);
     useEffect(() => {
         (async () => {
             await fetch50Bouquets(setBouquets);
@@ -60,10 +62,14 @@ export default function Home() {
     }, [bouquets]);
 
 
+
     return (
-        <div>
-            <Login customStyle={{position: "fixed", zIndex: "500"}} isAdmin={isAdmin}></Login>
+        <div style={{overflow: loginPopUpOpen ? "hidden" : "scroll"}} className={"h-screen w-screen"}>
+
+            <Login setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={isAdmin}></Login>
+            {loginPopUpOpen && <LoginPopUp setPopUp={setLoginPopUpOpen}></LoginPopUp>}
             <SlidedImage/>
+            <motion.div></motion.div>
             <About></About>
             <BouquetsSummary bouquets={bouquets}></BouquetsSummary>
             <OurWorkshops></OurWorkshops>

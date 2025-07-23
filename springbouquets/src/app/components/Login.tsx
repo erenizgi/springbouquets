@@ -10,9 +10,11 @@ import {useRouter} from "next/navigation";
 type LoginProps = {
     customStyle?: CSS.Properties;
     isAdmin?: boolean;
+    setPopUp: (status: boolean) => void;
+
 }
 
-const Login = ({customStyle, isAdmin} : LoginProps) => {
+const Login = ({customStyle, isAdmin, setPopUp} : LoginProps) => {
     const router = useRouter();
 
 
@@ -35,7 +37,13 @@ const Login = ({customStyle, isAdmin} : LoginProps) => {
             </div> : null}
             <Image className={"h-8 w-auto ml-4 mr-4"} src={user} alt={"user-icon"}></Image>
 
-            <p>Log In</p>
+            <p onClick={() => {
+                {
+                    setPopUp(true);
+                    console.log("qlşgjqwlkmg")
+                }
+            }} >Log In</p>
+
             <Image className={"h-8 w-auto ml-4 mr-4"} src={cart} alt={"cart-icon"}></Image>
             <Image className={"h-6 w-auto ml-4 mr-4"} src={settings} alt={"settings-icon"}></Image>
         </div>
