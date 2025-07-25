@@ -8,7 +8,7 @@ const madeForItalic = localFont({
 
 
 const OutroMainPage = () => {
-    return <div style={{backgroundImage: `url(${bride.src})`}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
+    return <div style={{backgroundImage: `url(${bride.src})`, zIndex: 10000}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
         <div className={"bg-white flex flex-row p-16 pt-24 pb-24 gap-16"}>
             <div className={"w-fit] flex flex-col items-start justify-start"}>
                 <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}}

@@ -51,6 +51,7 @@ export default function Home() {
     const [isAdmin, setAdmin] = useState(true);
     const [bouquets, setBouquets] = useState<{}[]>([])
     const [loginPopUpOpen, setLoginPopUpOpen] = useState<boolean>(false);
+    const [user, setUser] = useState<{ id: number, name: string, email: string }>({id: 0, name: "", email: ""})
     useEffect(() => {
         (async () => {
             await fetch50Bouquets(setBouquets);
@@ -62,11 +63,22 @@ export default function Home() {
     }, [bouquets]);
 
 
+    useEffect(() => {
+        fetch("/api/me")
+            .then(res => res.json())
+            .then(data => {
+                setUser(data);
+            });
+    }, []);
+
+    useEffect(() => {
+        console.log(user);
+    }, [user]);
 
     return (
         <div style={{overflow: loginPopUpOpen ? "hidden" : "scroll"}} className={"h-screen w-screen"}>
 
-            <Login setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={isAdmin}></Login>
+            <Login user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={false}></Login>
             {loginPopUpOpen && <LoginPopUp setPopUp={setLoginPopUpOpen}></LoginPopUp>}
             <SlidedImage/>
             <motion.div></motion.div>

@@ -5,10 +5,6 @@ import Image from "next/image";
 import AddProduct from "@/app/Admin/components/AddProduct";
 import EditProducts from "@/app/Admin/components/EditProducts";
 
-type AdminProps = {
-    isAdmin?: boolean;
-}
-
 const inputClass = "w-[90%] p-3 pl-3 rounded-lg outline-none";
 
 const fetch50Bouquets = async (setBouquets?: (value: (((prevState: object[]) => object[]) | object[])) => void) => {
@@ -29,14 +25,15 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: object[]) => 
 
 
 
-const Admin = ({isAdmin}: AdminProps) => {
+const Admin = () => {
     const [imgUrl, setImgUrl] = useState<string | null>(null);
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [description, setDescription] = useState<string>("")
-    const [allBouquets, setAllBouquets] = useState<{}[]>([])
+    const [allBouquets, setAllBouquets] = useState<{}[]>([]);
+    const [isAdmin, setAdmin] = useState<true | false>(true)
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target?.files[0]) {
             setFile(e.target?.files[0]);
@@ -86,7 +83,7 @@ const Admin = ({isAdmin}: AdminProps) => {
             setTitle("");
             setPrice("");
             setDescription("");
-            if (inputRef.current) inputRef.current.value = "";
+            // if (inputRef.current) inputRef.current.value = "";
             await fetch50Bouquets(setAllBouquets);
         } catch (e) {
             console.log("Bir hata oluştu: " + e);
@@ -105,11 +102,13 @@ const Admin = ({isAdmin}: AdminProps) => {
         (async () => {
             await fetch50Bouquets(setAllBouquets)
         })();
+        console.log(isAdmin);
     }, []);
 
     return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
-        <Login customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin}></Login>
+        <Login customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}}></Login>
         <div className={"flex flex-row h-full"}>
+
             <AddProduct submit={async (e: React.FormEvent<Element>) => {
                 await handleSubmit(e)
             }} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>

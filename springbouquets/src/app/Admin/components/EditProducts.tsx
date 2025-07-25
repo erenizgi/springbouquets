@@ -1,14 +1,13 @@
 'use client'
 import BouquetCard from "@/app/components/BouquetCard";
 import localFont from "next/font/local";
-import {Bouquet} from "prisma-client-c829a23129f272d8f9429eec7987d398a54d7212bd2dff9ed493e3d9d242195c";
-
+import {Bouquet} from "@/types/page"
 const madeForBold = localFont({
     src: "../../fonts/WixMadeforText-Bold.ttf",
     weight: "200",
 });
 
-async function deleteBouquet({ id, title }: {id: number, title: string}) {
+async function deleteBouquet({ id, title }: {id: number, title?: string | undefined}) {
     console.log("qlwkngqkwlg")
     try {
 

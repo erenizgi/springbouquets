@@ -37,9 +37,35 @@ async function GetUser(request) {
     }
 
 }
-async function UpdateUser(request) {
+async function CreateUser(request) {
     const body = await request.json();
     const email = body.email;
+    console.log(body);
+    try{
+        const exists = await prisma.user.findUnique({ where: { email } });
+        if (exists) {
+            return Response.json(
+                {error: "Email already used!"},
+                {status: 409}
+            );
+        }
+
+        const user = await prisma.user.create({
+            data: body
+        });
+        return Response.json(user, { status: 200 });
+    }catch (e){
+        console.log(e);
+        return Response.json({error: e}, {
+            status: 500
+        })
+    }
+}
+
+async function UpdateUser(request) {
+    const body = await request.json();
+    const email = body.email
+    console.log(body);
     try{
         const user = await prisma.user.upsert({
             where: { email: email },
@@ -48,11 +74,57 @@ async function UpdateUser(request) {
         });
         return Response.json(user, { status: 200 });
     }catch (e){
+        console.log(e);
         return Response.json({error: e}, {
             status: 500
         })
     }
 }
+
+import { cookies } from 'next/headers';
+
+async function LoginUser(request) {
+    const body = await request.json();
+    const { email/*, password*/ } = body;
+    console.log(body);
+
+    if (!email) {
+        return Response.json({ error: "Type an email!" }, { status: 400 });
+    }
+
+    try {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) {
+            return Response.json({ error: "No user has been found." }, { status: 404 });
+        }
+
+        // ***Şifre kontrolünü burada yapman gerekir.***
+
+        // Session oluştur (örnek: userId içeren basit bir cookie)
+        const sessionValue = Buffer.from(JSON.stringify({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            t: Date.now()
+        })).toString('base64');
+        (await cookies()).set('session', sessionValue, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 20*60 // 20 saniye
+        });
+
+        return Response.json({ message: "Giriş başarılı!", user: {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            }});
+    } catch (err) {
+        return Response.json({ error: err.message || String(err) }, { status: 500 });
+    }
+}
+
+export { LoginUser as PATCH }
 
 async function DeleteUser(request) {
     try {
@@ -87,7 +159,7 @@ async function DeleteUser(request) {
 
 
 
-export {GetUser as GET, UpdateUser as POST, DeleteUser as DELETE}
+export {GetUser as GET, CreateUser as POST, DeleteUser as DELETE}
 
 
 

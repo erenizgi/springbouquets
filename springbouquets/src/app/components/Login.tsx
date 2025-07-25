@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import flower_icon from "../images/flower-icon.png"
-import user from "../images/user.png"
+import userIcon from "../images/user.png"
 import cart from "../images/cart.png"
 import settings from "../images/settings.png"
 import CSS from "csstype";
@@ -10,14 +10,15 @@ import {useRouter} from "next/navigation";
 type LoginProps = {
     customStyle?: CSS.Properties;
     isAdmin?: boolean;
-    setPopUp: (status: boolean) => void;
+    setPopUp?: (status: boolean) => void;
+    user: {}
 
 }
 
-const Login = ({customStyle, isAdmin, setPopUp} : LoginProps) => {
+const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
     const router = useRouter();
 
-
+    console.log(user);
 
     const adminDashboardRouteHandler = () => {
         router.push("/Admin");
@@ -35,16 +36,17 @@ const Login = ({customStyle, isAdmin, setPopUp} : LoginProps) => {
             {isAdmin ? <div>
                 <h3 onClick={adminDashboardRouteHandler}>Admin Dashboard</h3>
             </div> : null}
-            <Image className={"h-8 w-auto ml-4 mr-4"} src={user} alt={"user-icon"}></Image>
+            <Image className={"h-8 w-auto ml-4 mr-4"} src={userIcon} alt={"user-icon"}></Image>
 
-            <p onClick={() => {
+            {!isAdmin && !user && <p onClick={() => {
                 {
-                    setPopUp(true);
-                    console.log("qlşgjqwlkmg")
+                    if (setPopUp) {
+                        setPopUp(true);
+                    }
                 }
-            }} >Log In</p>
+            }}>Log In</p>}
 
-            <Image className={"h-8 w-auto ml-4 mr-4"} src={cart} alt={"cart-icon"}></Image>
+            {!isAdmin && <Image className={"h-8 w-auto ml-4 mr-4"} src={cart} alt={"cart-icon"}></Image>}
             <Image className={"h-6 w-auto ml-4 mr-4"} src={settings} alt={"settings-icon"}></Image>
         </div>
     </div>
