@@ -83,7 +83,6 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
                     </button>
 
                     <Image
-                        onClick={printSession}
                         className={"h-12 w-auto mb-4 animate-pulse"} src={flower_icon} alt={"flower-icon"}></Image>
                     <h1 style={{textShadow: '1px 1px 2px #000000'}}
                         className={`mb-24 text-4xl ${madeForItalic.className} 

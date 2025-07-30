@@ -32,12 +32,18 @@ async function deleteBouquet({ id, title }: {id: number, title?: string | undefi
 }
 
 
-const EditProducts = ({bouquets, fetchBouquets}) => {
-    return <div className={"grid grid-cols-4 gap-4 p-16 gap-y-16"}>
+const EditProducts = ({bouquets, fetchBouquets, setEditPopUp, setEditedBouquet}) => {
+    return <div className={"grid grid-cols-4 gap-4 p-16 gap-y-16 max-w-[50%]"}>
         {bouquets.map((bouquet: Bouquet) => <div key={bouquet.id}>
             <BouquetCard bouquet={bouquet}></BouquetCard>
-            <div className={"flex flex-row items-center justify-center gap-2 mt-4"}>
-                <div className={`w-[40%] ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
+            <div className={"flex flex-row items-center justify-center gap-2 mt-4 h-fit"}>
+                <div
+                    onClick={() => {
+                        setEditedBouquet(bouquet);
+                        console.log(bouquet);
+                        setEditPopUp(true);
+                    }}
+                    className={`w-[40%] cursor-pointer ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
                     <p>EDIT</p>
                 </div>
                 <div
@@ -50,7 +56,7 @@ const EditProducts = ({bouquets, fetchBouquets}) => {
                             console.log("Not deleted: " + e.message);
                         }
                     }}
-                    className={`w-[40%] ${madeForBold.className} bg-[rgba(118,58,18,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
+                    className={`w-[40%] ${madeForBold.className} cursor-pointer bg-[rgba(118,58,18,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
                     <p className={"w-fit text-center"}>DELETE</p>
                 </div>
             </div>

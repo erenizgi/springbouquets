@@ -14,6 +14,8 @@
   font-style: italic;
 }
 
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -37,3 +39,16 @@ body {
   color: var(--foreground);
   font-family: MadeForRegular, Helvetica, sans-serif;
 }
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in {
+  animation: fadeIn 0.7s cubic-bezier(0.32, 0, 0.67, 0.45) both;
+}
+.fade-in-2s {
+  animation: fadeIn 1.4s cubic-bezier(0.32, 0, 0.67, 0.45) both;
+}
+

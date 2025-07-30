@@ -34,6 +34,7 @@ async function UpdateBouquet(request) {
     const formData = await request.formData();
     const title = formData.get('title');
     const price = formData.get('price');
+    const id = formData.get('id');
     const description = formData.get('description');
     const imageFile = formData.get('image');
     let imagePath = null;
@@ -49,18 +50,32 @@ async function UpdateBouquet(request) {
     }
     console.log("qwgqgqwgg");
     const body = {
-        title, price: Number(price), description,
-        image: imagePath,
+        title, price: Number(price), description
     };
+    if (!id) {
+        body.image = imagePath;
+    }
 
     try {
-        const bouquet = await prisma.bouquet.upsert({
-            where: { title: title },
-            update: body,
-            create: body,
-        });
+        let bouquet;
+        console.log(id);
+        if (id) { //THIS IS FOR UPDATE
+            bouquet = await prisma.bouquet.upsert({
+                where: { id: Number(id) },
+                update: body,
+                create: body,
+            });
+        }else { //THIS IS FOR CREATION
+            bouquet = await prisma.bouquet.upsert({
+                where: { title: title },
+                update: body,
+                create: body,
+            });
+        }
+
         return Response.json(bouquet, { status: 200 });
     } catch (e) {
+        console.log(e);
         return Response.json({ error: e.toString() }, { status: 500 });
     }
 }

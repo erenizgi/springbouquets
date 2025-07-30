@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Image from "next/image";
 import AddProduct from "@/app/Admin/components/AddProduct";
 import EditProducts from "@/app/Admin/components/EditProducts";
+import EditProductPopUp from "@/app/Admin/components/EditProductPopUp";
 
 const inputClass = "w-[90%] p-3 pl-3 rounded-lg outline-none";
 
@@ -33,7 +34,19 @@ const Admin = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [description, setDescription] = useState<string>("")
     const [allBouquets, setAllBouquets] = useState<{}[]>([]);
-    const [isAdmin, setAdmin] = useState<true | false>(true)
+    const [isAdmin, setAdmin] = useState<true | false>(true);
+    const [editPopUp, setEditPopUp] = useState(false);
+    const [user, setUser] = useState({});
+    const [editedBouquet, setEditedBouquet] = useState({});
+
+    useEffect(() => {
+        fetch("/api/me")
+            .then(res => res.json())
+            .then(data => {
+                setUser(data);
+            });
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target?.files[0]) {
             setFile(e.target?.files[0]);
@@ -105,14 +118,25 @@ const Admin = () => {
         console.log(isAdmin);
     }, []);
 
-    return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
-        <Login customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}}></Login>
-        <div className={"flex flex-row h-full"}>
+    useEffect(() => {
+        if (editPopUp) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
+        return () => document.body.classList.remove('overflow-hidden');
+    }, [editPopUp]);
 
+    return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
+        <Login user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}}></Login>
+        <div
+            className={"flex flex-row h-full"}>
+
+            {editPopUp && <EditProductPopUp updateAdminPage={() => fetch50Bouquets(setAllBouquets)} bouquet={editedBouquet} setEditPopUp={setEditPopUp}></EditProductPopUp>}
             <AddProduct submit={async (e: React.FormEvent<Element>) => {
                 await handleSubmit(e)
             }} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
-            <EditProducts fetchBouquets={async () => await fetch50Bouquets(setAllBouquets)} bouquets={allBouquets}></EditProducts>
+            <EditProducts setEditedBouquet={setEditedBouquet} setEditPopUp={setEditPopUp} fetchBouquets={async () => await fetch50Bouquets(setAllBouquets)} bouquets={allBouquets}></EditProducts>
         </div>
 
 

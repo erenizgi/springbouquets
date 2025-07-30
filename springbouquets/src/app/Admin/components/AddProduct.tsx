@@ -36,7 +36,7 @@ const AddProduct = ({
         console.log(imgUrl);
     }, []);
     
-    return <div className={"flex flex-col border-r border-[rgba(0,0,0,0.1)] p-8 pt-12 w-[50%]"}>
+    return <div className={"flex flex-col border-r border-[rgba(0,0,0,0.1)] p-8 pt-12 w-[50%] max-w-[50%]"}>
         <h2 className={"text-3xl mb-8"}>Add Product</h2>
         <div className={"w-full p-3 flex flex-row w-full gap-10 h-fit"}>
             <div className={"flex flex-col w-[60%]"}>

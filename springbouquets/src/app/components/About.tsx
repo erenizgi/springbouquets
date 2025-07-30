@@ -8,9 +8,9 @@ const madeForItalic = localFont({
 
 const About = () => {
 
-    return <div style={{position: "relative", zIndex: 150, paddingBottom: "8rem"}} className={"w-full flex flex-row items-center justify-center"}>
+    return <div style={{position: "relative", zIndex: 150, paddingBottom: "8rem"}} className={"w-full flex flex-row items-center justify-center animate-fade-inn"}>
         <div className={"w-[40%] flex flex-col bg-slate-100 p-16"}>
-            <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}} className={"mb-4"}>About Us</h3>
+            <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}} className={"mb-4 fade-in"}>About Us</h3>
             <div className="w-[25%] mb-8 bg-gray-300 h-[1px]"></div>
 
             <h2 className={`text-xl mb-4 ${madeForItalic.className}`}>I'm just little title. You can change me!</h2>

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import localFont from "next/font/local";
 import BouquetCard from "@/app/components/BouquetCard";
 import {Bouquet} from "@/types/page"
+import {useFadeInOnView} from "@/app/components/SpringIsHere";
 
 const madeForItalic = localFont({
     src: "../fonts/WixMadeforText-Italic-VariableFont_wght.ttf",
@@ -37,8 +38,13 @@ const BouquetsSummary = ({bouquets}: BouquetSummaryProps) => {
         console.log(bouquets)
     }, []);
 
-    return <div style={{position: "relative", zIndex: 150, paddingBottom: "16rem"}} onClick={() => console.log(bouquets)}
-                className={"w-full bg-slate-100 flex flex-row items-center justify-center"}>
+    const [fadeRef, isVisible] = useFadeInOnView();
+
+
+    return <div
+        ref={fadeRef}
+        style={{position: "relative", zIndex: 150, paddingBottom: "16rem"}} onClick={() => console.log(bouquets)}
+                className={`w-full bg-slate-100 flex flex-row items-center justify-center ${isVisible ? "fade-in" : ''}`}>
         <div className={"w-[100%] flex flex-col items-center p-16"}>
             <div className={"mb-16"}>
                 <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}} className={"mb-4"}>Spring Bouquets</h3>
@@ -51,7 +57,7 @@ const BouquetsSummary = ({bouquets}: BouquetSummaryProps) => {
             </div>
             <div className={"bg-green"}>
                 <button
-                    className={`${madeForItalic.className} text-white w-fit p-4 pl-8 pr-8 text-xl mt-8 rounded-sm bg-[rgb(0,50,0)]`}>VIEW_ALL
+                    className={`${madeForItalic.className} text-white w-fit p-4 pl-8 pr-8 text-xl mt-8 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)]  transition duration-200 hover:scale-105`}>VIEW_ALL
                 </button>
             </div>
         </div>

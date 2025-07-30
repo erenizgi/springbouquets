@@ -30,13 +30,13 @@ const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
 
     return <div className={"w-full flex flex-row items-center justify-end"} style={{...customStyle, background: "white", padding: "1rem", paddingLeft: "2rem", paddingTop: "1.5rem"}}>
         <div className={"w-[10%] box-border"} onClick={mainPageRouteHandler}>
-            <Image className={"h-12 w-auto"} src={flower_icon} alt={"flower-icon"}></Image>
+            <Image className={"h-12 w-auto hover:scale-105 cursor-pointer transition duration-250 "} src={flower_icon} alt={"flower-icon"}></Image>
         </div>
         <div className={"w-[90%] flex flex-row items-center justify-end"}>
-            {isAdmin ? <div>
+            {isAdmin ? <div className={"hover:scale-105 cursor-pointer transition duration-250 "}>
                 <h3 onClick={adminDashboardRouteHandler}>Admin Dashboard</h3>
             </div> : null}
-            <Image className={"h-8 w-auto ml-4 mr-4"} src={userIcon} alt={"user-icon"}></Image>
+            <Image className={"h-8 w-auto ml-4 mr-4 hover:scale-105 cursor-pointer transition duration-250 "} src={userIcon} alt={"user-icon"}></Image>
 
             {!isAdmin && !user && <p onClick={() => {
                 {
@@ -47,7 +47,7 @@ const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
             }}>Log In</p>}
 
             {!isAdmin && <Image className={"h-8 w-auto ml-4 mr-4"} src={cart} alt={"cart-icon"}></Image>}
-            <Image className={"h-6 w-auto ml-4 mr-4"} src={settings} alt={"settings-icon"}></Image>
+            <Image className={"hover:scale-105 cursor-pointer transition duration-250 h-6 w-auto ml-4 mr-4"} src={settings} alt={"settings-icon"}></Image>
         </div>
     </div>
 }

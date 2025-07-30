@@ -6,10 +6,14 @@ const madeForItalic = localFont({
     weight: "200",
 });
 
+import {useFadeInOnView} from "@/app/components/SpringIsHere";
 
 const OutroMainPage = () => {
+    const [ref, isVisible] = useFadeInOnView();
+
+
     return <div style={{backgroundImage: `url(${bride.src})`, zIndex: 10000}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
-        <div className={"bg-white flex flex-row p-16 pt-24 pb-24 gap-16"}>
+        <div ref={ref} className={`bg-white flex flex-row p-16 pt-24 pb-24 gap-16 ${isVisible ? "fade-in" : ''}`}>
             <div className={"w-fit] flex flex-col items-start justify-start"}>
                 <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}}
                     className={`tracking-widest text-lg mb-4`}>CONTACT US</h3>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import CSS from "csstype";
 import localFont from "next/font/local";
+import {colorful, textShadow} from "@/types/page";
 
 const BAHARGELDI: CSS.Properties = {
     fontSize: "4rem",
@@ -24,29 +25,48 @@ const madeForItalic = localFont({
     src: "../fonts/WixMadeforText-Italic-VariableFont_wght.ttf",
     weight: "200",
 });
+export function useFadeInOnView() {
+    const ref = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const node = ref.current;
+        if (!node) return;
+        const observer = new window.IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setIsVisible(true);
+                observer.unobserve(node); // bir kere çalışsın, istersen kaldırma
+            }
+        });
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, []);
+
+    return [ref, isVisible];
+}
+
 
 const SpringIsHere = () => {
+    const [fadeRef, isVisible] = useFadeInOnView();
 
-    return (<div style={BAHARGELDI}>
+
+    return (<div style={BAHARGELDI} ref={fadeRef} className={`${isVisible ? "fade-in" : ''}`}>
         <div className={"mb-4"}>
-            <p style={{textShadow: "1px 1px 1px rgba(150, 150, 150, 0.25)"}} className={`text-black text-shadow text-2xl
-                ${madeForItalic.className} mb-8`}>Step into spring with a colorful bouquet</p>
+            <p style={{...textShadow}} className={`text-2xl
+                ${madeForItalic.className} mb-8 animate-pulse`}>Step into spring with a colorful bouquet</p>
             <div className="w-[4rem] bg-gray-700 h-[1px]"></div>
         </div>
 
         <div className="w-fit">
-            <h1 style={{fontSize: "8rem"}} className={"text-gray-200"}>SPR-</h1>
-            <div className="w-full bg-gray-200 h-[1px]"></div>
+            <h1 style={{fontSize: "8rem", ...textShadow}} className={`text-gray-200 ${colorful} from-pink-400 via-yellow-500 to-blue-700`}>SPR-</h1>
         </div>
         <div className="w-fit">
-            <h1 style={{fontSize: "8rem"}} className={"text-gray-200"}>ING IS</h1>
-            <div className="w-full bg-gray-200 h-[1px]"></div>
+            <h1 style={{fontSize: "8rem", ...textShadow}} className={`text-gray-200 ${colorful} from-blue-700 via-pink-400 to-yellow-500`}>ING IS</h1>
         </div>
         <div className="w-fit">
-            <h1 style={{fontSize: "8rem"}} className={"text-gray-200"}>HERE</h1>
-            <div className="w-full bg-gray-200 h-[1px]"></div>
+            <h1 style={{fontSize: "8rem", ...textShadow}} className={`text-gray-200 ${colorful} from-yellow-500 via-blue-700 to-pink-400`}>HERE</h1>
         </div>
-        <button className={`${madeForItalic.className} w-fit p-2 pl-8 pr-8 text-white text-base mt-4 rounded-sm bg-[rgb(0,50,0)]`}>Shop_Now</button>
+        <button className={`${madeForItalic.className} w-fit p-2 pl-8 pr-8 text-white text-base mt-4 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)] cursor-pointer transition duration-200 hover:scale-105`}>Shop_Now</button>
     </div>)
 }
 
