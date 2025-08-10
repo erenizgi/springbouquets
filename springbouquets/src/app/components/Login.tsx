@@ -6,20 +6,30 @@ import cart from "../images/cart.png"
 import settings from "../images/settings.png"
 import CSS from "csstype";
 import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 
 type LoginProps = {
     customStyle?: CSS.Properties;
     isAdmin?: boolean;
     setPopUp?: (status: boolean) => void;
-    user: {}
+    user: {};
+    loggedIn?: boolean;
 
 }
 
-const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
+const Login = ({customStyle, setPopUp, loggedIn} : LoginProps) => {
     const router = useRouter();
+    const [user, setUser] = useState();
+    const [isAdmin, setAdmin] = useState(false);
 
-    console.log(user);
-
+    useEffect(() => {
+        fetch("/api/me")
+            .then(res => res.json())
+            .then(data => {
+                setUser(data);
+                console.log("User is: " + JSON.stringify(data));
+            });
+    }, []);
     const adminDashboardRouteHandler = () => {
         router.push("/Admin");
     }
@@ -33,12 +43,14 @@ const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
             <Image className={"h-12 w-auto hover:scale-105 cursor-pointer transition duration-250 "} src={flower_icon} alt={"flower-icon"}></Image>
         </div>
         <div className={"w-[90%] flex flex-row items-center justify-end"}>
-            {isAdmin ? <div className={"hover:scale-105 cursor-pointer transition duration-250 "}>
+            {!isAdmin ? <div className={"hover:scale-105 cursor-pointer transition duration-250 "}>
                 <h3 onClick={adminDashboardRouteHandler}>Admin Dashboard</h3>
             </div> : null}
             <Image className={"h-8 w-auto ml-4 mr-4 hover:scale-105 cursor-pointer transition duration-250 "} src={userIcon} alt={"user-icon"}></Image>
 
-            {!isAdmin && !user && <p onClick={() => {
+            {!isAdmin && user?.error && !loggedIn && <p
+                className={"cursor-pointer hover:scale-105 transition duration-250"}
+                onClick={() => {
                 {
                     if (setPopUp) {
                         setPopUp(true);
@@ -46,7 +58,7 @@ const Login = ({customStyle, isAdmin, setPopUp, user} : LoginProps) => {
                 }
             }}>Log In</p>}
 
-            {!isAdmin && <Image className={"h-8 w-auto ml-4 mr-4"} src={cart} alt={"cart-icon"}></Image>}
+            {!isAdmin && <Image className={"h-8 w-auto ml-4 mr-4 hover:scale-105 cursor-pointer transition duration-250"} src={cart} alt={"cart-icon"}></Image>}
             <Image className={"hover:scale-105 cursor-pointer transition duration-250 h-6 w-auto ml-4 mr-4"} src={settings} alt={"settings-icon"}></Image>
         </div>
     </div>

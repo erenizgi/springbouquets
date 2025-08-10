@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export async function GET() {
     const session = (await cookies()).get('session');
-    console.log(session+"sessionnadşnlmadlşna")
     if (!session) {
         return Response.json({ error: 'Login please!' }, { status: 401 });
     }

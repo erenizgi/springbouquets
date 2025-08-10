@@ -1,13 +1,18 @@
 import Image from "next/image";
 import localFont from "next/font/local";
+import React, { useRef } from "react";
 const madeForItalic = localFont({
     src: "../fonts/WixMadeforText-Italic-VariableFont_wght.ttf",
     weight: "200",
 });
 
 const BouquetCard = ({bouquet}) => {
-    return <div className={"flex flex-col items-center justify-start gap-8 h-fit"}>
-        <div className={"rounded-sm relative w-full aspect-[3/4] overflow-hidden"}>
+    const containerRef = useRef();
+
+
+    return <div className={"flex flex-col items-center justify-start gap-8 h-fit group"}>
+        <div
+             className={"group-hover:brightness-110 transition duration-500 group-hover:rotate-1 cursor-pointer rounded-sm relative w-full aspect-[3/4] overflow-hidden"}>
             <Image fill src={bouquet.image}
                    alt={"bouquet"}
                    style={{width: "100%", height: "100%", objectFit: "cover"}}

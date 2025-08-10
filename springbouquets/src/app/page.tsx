@@ -35,7 +35,7 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]
         if (setBouquets) {
             if (parsed?.error) setBouquets([]);
             else {
-                setBouquets([...parsed, ...parsed, ...parsed]);
+                setBouquets([...parsed, ...parsed, ...parsed].slice(0,12));
             }
         }
     }catch (e){
@@ -50,6 +50,7 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]
 export default function Home() {
     const [isAdmin, setAdmin] = useState(true);
     const [bouquets, setBouquets] = useState<{}[]>([])
+    const [loggedIn, setLoggedIn] = useState(false);
     const [loginPopUpOpen, setLoginPopUpOpen] = useState<boolean>(false);
     const [user, setUser] = useState<{ id: number, name: string, email: string }>({id: 0, name: "", email: ""})
     useEffect(() => {
@@ -59,11 +60,6 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        console.log(bouquets);
-    }, [bouquets]);
-
-
-    useEffect(() => {
         fetch("/api/me")
             .then(res => res.json())
             .then(data => {
@@ -71,15 +67,13 @@ export default function Home() {
             });
     }, []);
 
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
+
 
     return (
         <div style={{overflow: loginPopUpOpen ? "hidden" : "scroll"}} className={"h-screen w-screen"}>
 
-            <Login user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true}></Login>
-            {loginPopUpOpen && <LoginPopUp setPopUp={setLoginPopUpOpen}></LoginPopUp>}
+            <Login loggedIn={loggedIn} user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true}></Login>
+            {loginPopUpOpen && <LoginPopUp setLoggedIn={setLoggedIn} setPopUp={setLoginPopUpOpen}></LoginPopUp>}
             <SlidedImage/>
             <motion.div></motion.div>
             <About></About>

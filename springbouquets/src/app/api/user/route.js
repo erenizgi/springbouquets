@@ -40,7 +40,7 @@ async function GetUser(request) {
 async function CreateUser(request) {
     const body = await request.json();
     const email = body.email;
-    console.log(body);
+    const hashedPassword = await hashPassword(body.password);
     try{
         const exists = await prisma.user.findUnique({ where: { email } });
         if (exists) {
@@ -51,7 +51,7 @@ async function CreateUser(request) {
         }
 
         const user = await prisma.user.create({
-            data: body
+            data: {...body, password: hashedPassword}
         });
         return Response.json(user, { status: 200 });
     }catch (e){
@@ -82,10 +82,12 @@ async function UpdateUser(request) {
 }
 
 import { cookies } from 'next/headers';
+import {hashPassword, verifyPassword} from "../../utils/password";
+import {error} from "next/dist/build/output/log";
 
 async function LoginUser(request) {
     const body = await request.json();
-    const { email/*, password*/ } = body;
+    const { email, password } = body;
     console.log(body);
 
     if (!email) {
@@ -98,9 +100,13 @@ async function LoginUser(request) {
             return Response.json({ error: "No user has been found." }, { status: 404 });
         }
 
-        // ***Şifre kontrolünü burada yapman gerekir.***
+        const hashedPassword = user.password;
+        if (!(await verifyPassword(password, hashedPassword))){
+            return Response.json({ message: "Tekrar deneyiniz!"}, {
+                status: 401
+            });
+        }
 
-        // Session oluştur (örnek: userId içeren basit bir cookie)
         const sessionValue = Buffer.from(JSON.stringify({
             id: user.id,
             name: user.name,

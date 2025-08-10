@@ -8,5 +8,10 @@ export type Bouquet = {
 
 export const colorful = "text-transparent bg-clip-text bg-gradient-to-r";
 export const textShadow = {
-    textShadow: "1px 1px 2px rgba(0,0,0,.30)"
+    textShadow: "1px 1px 2px rgba(0,0,0,.20)"
+}
+
+export const textShadowWhite = {
+    textShadow: "1px 1px 2px rgba(200,200,200,.15)"
+
 }

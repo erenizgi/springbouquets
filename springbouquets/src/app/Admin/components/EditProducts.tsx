@@ -40,10 +40,9 @@ const EditProducts = ({bouquets, fetchBouquets, setEditPopUp, setEditedBouquet})
                 <div
                     onClick={() => {
                         setEditedBouquet(bouquet);
-                        console.log(bouquet);
                         setEditPopUp(true);
                     }}
-                    className={`w-[40%] cursor-pointer ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
+                    className={`w-[40%] transition duration-250 hover:scale-105 cursor-pointer ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
                     <p>EDIT</p>
                 </div>
                 <div
@@ -56,7 +55,7 @@ const EditProducts = ({bouquets, fetchBouquets, setEditPopUp, setEditedBouquet})
                             console.log("Not deleted: " + e.message);
                         }
                     }}
-                    className={`w-[40%] ${madeForBold.className} cursor-pointer bg-[rgba(118,58,18,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
+                    className={`w-[40%] ${madeForBold.className} transition duration-250 hover:scale-105 cursor-pointer bg-[rgba(118,58,18,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
                     <p className={"w-fit text-center"}>DELETE</p>
                 </div>
             </div>

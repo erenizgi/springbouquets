@@ -51,7 +51,6 @@ const SlidedImage = () => {
         if (window.innerWidth <= 768) {
             setMobile(true);
         }
-        console.log(slideImages)
     }, []);
     return <div style={{height: "80vh", zIndex: 0, width: "100%", marginBottom: "4rem", position: "relative"}}>
         <div style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}}>

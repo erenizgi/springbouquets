@@ -52,3 +52,6 @@ body {
   animation: fadeIn 1.4s cubic-bezier(0.32, 0, 0.67, 0.45) both;
 }
 
+.sprinkle {
+  transition: opacity 0.2s;
+}

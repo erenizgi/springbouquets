@@ -8,7 +8,7 @@ import EditProductPopUp from "@/app/Admin/components/EditProductPopUp";
 
 const inputClass = "w-[90%] p-3 pl-3 rounded-lg outline-none";
 
-const fetch50Bouquets = async (setBouquets?: (value: (((prevState: object[]) => object[]) | object[])) => void) => {
+export const fetch50Bouquets = async (setBouquets?: (value: (((prevState: object[]) => object[]) | object[])) => void) => {
     try{
         const response = await fetch("/api/bouquet");
 
@@ -61,8 +61,6 @@ const Admin = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("l1kşwgwqlkng")
-
         if (!title || !price) {
             console.log("Fill the title and price!");
             return;

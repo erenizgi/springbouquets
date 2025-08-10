@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import BouquetCard from "@/app/components/BouquetCard";
 import {Bouquet} from "@/types/page"
 import {useFadeInOnView} from "@/app/components/SpringIsHere";
+import {useRouter} from "next/navigation";
 
 const madeForItalic = localFont({
     src: "../fonts/WixMadeforText-Italic-VariableFont_wght.ttf",
@@ -34,12 +35,12 @@ type BouquetSummaryProps = {
 }
 
 const BouquetsSummary = ({bouquets}: BouquetSummaryProps) => {
-    useEffect(() => {
-        console.log(bouquets)
-    }, []);
 
     const [fadeRef, isVisible] = useFadeInOnView();
-
+    const router = useRouter();
+    const handleDirect = () => {
+        router.push("/ViewAll");
+    }
 
     return <div
         ref={fadeRef}
@@ -53,11 +54,12 @@ const BouquetsSummary = ({bouquets}: BouquetSummaryProps) => {
             </div>
 
             <div className={"grid grid-cols-4 gap-16 w-[1600px] overflow-hidden"}>
-                {shuffle(bouquets).slice(0,12).map((bouquet) => <BouquetCard key={bouquet.title} bouquet={bouquet}></BouquetCard>)}
+                {shuffle(bouquets).slice(0,12).map((bouquet, index) => <BouquetCard key={bouquet.title+index} bouquet={bouquet}></BouquetCard>)}
             </div>
             <div className={"bg-green"}>
                 <button
-                    className={`${madeForItalic.className} text-white w-fit p-4 pl-8 pr-8 text-xl mt-8 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)]  transition duration-200 hover:scale-105`}>VIEW_ALL
+                    onClick={handleDirect}
+                    className={`${madeForItalic.className} text-white w-fit p-4 pl-8 pr-8 text-xl mt-8 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)] cursor-pointer  transition duration-200 hover:scale-105`}>VIEW_ALL
                 </button>
             </div>
         </div>

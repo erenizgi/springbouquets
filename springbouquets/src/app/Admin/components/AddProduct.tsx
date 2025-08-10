@@ -76,7 +76,7 @@ const AddProduct = ({
                 <div className={"w-full pl-24 pr-24 m-0 flex items-end justify-start flex-1"}>
                     <button
                         onClick={submit}
-                        className={"hover:bg-[rgb(0,70,50)] ease-in-out hover:scale-105 transition duration-350 h-12 w-full rounded-lg text-white align-top bg-[rgb(0,50,0)]"}>CREATE_NOW
+                        className={"cursor-pointer hover:bg-[rgb(0,70,50)] ease-in-out hover:scale-105 transition duration-350 h-12 w-full rounded-lg text-white align-top bg-[rgb(0,50,0)]"}>CREATE_NOW
                     </button>
                 </div>
 

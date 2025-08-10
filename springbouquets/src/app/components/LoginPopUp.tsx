@@ -1,9 +1,10 @@
-
+'use client'
 import localFont from "next/font/local";
 import Image from "next/image";
 import flower_icon from "@/app/images/flower-icon.png";
 import {useEffect, useState} from "react";
 import {motion} from "framer-motion";
+import {hashPassword} from "@/app/utils/password";
 
 const popupVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.97 },
@@ -17,13 +18,14 @@ export const madeForItalic = localFont({
 });
 type LoginPopUpProps = {
     setPopUp: (status: boolean) => void;
+    setLoggedIn: (status: boolean) => void;
 }
 
-const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
+const LoginPopUp = ({setPopUp, setLoggedIn}: LoginPopUpProps) => {
     const [loginOrRegister, setLoginOrRegister] = useState("login");
     const [registerForm, setRegisterForm] = useState< {name: string, surname: string, email: string, password: string}>({name: "", surname: "", email: "", password: ""});
     const [loginForm, setLoginForm] = useState<{email: string, password: string}>( {email: "", password: ""});
-
+    const [errorMessage, setErrorMessage] = useState("");
 
 
     async function handleLogin(email, password) {
@@ -36,9 +38,12 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
         const data = await res.json();
         if (res.ok) {
             console.log("Login Successful: " + data.user.name);
-            // user state veya redux ile state tutabilirsin, veya router ile yönlendirebilirsin
+            setPopUp(false);
+            setLoggedIn(true);
+
         } else {
             console.log("Something went wrong: " + data.error);
+            setErrorMessage("Try again!")
         }
     }
     async function handleRegister(email: string, password: string, name?: string) {
@@ -49,14 +54,14 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify({ name, email, password: password })
             });
 
             const data = await response.json();
-            console.log(data);
 
             if (response.ok) {
                 console.log("Welcome " + data.name + "! Succesfully registered!.");
+                setLoginOrRegister("login");
             } else {
                 console.log(data.error || "Something went wrong.");
             }
@@ -108,10 +113,13 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
 
                                    className={"shadow-md bg-slate-700 text-white rounded-2xl pl-4 text-left h-8"}/>
                         </div>
+                        <div className={"h-8"}>
+                            <p>{errorMessage}</p>
+                        </div>
                         <div className={"flex w-full items-center justify-end"}>
                             <button
                                 onClick={() => handleLogin(loginForm.email, loginForm.password)}
-                                className={"hover:bg-slate-500 bg-slate-700 text-white py-2 transition hover:scale-105 hover:bg-slate-600 px-8 rounded-3xl text-sm"}>Sign-In
+                                className={"cursor-pointer hover:bg-slate-500 bg-slate-700 text-white py-2 transition hover:scale-105 hover:bg-slate-600 px-8 rounded-3xl text-sm"}>Sign-In
                             </button>
                         </div>
                         <p
@@ -121,7 +129,7 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
                     bg-gradient-to-r from-pink-600 via-yellow-900 to-blue-700
                     text-transparent bg-clip-text
                     drop-shadow-lg
-                    select-none">
+                    select-none cursor-pointer">
                             Don't you have an account?
                         </p>
                     </div>
@@ -187,7 +195,7 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
                         <div className={"flex w-full items-center justify-end"}>
                             <button
                                 onClick={() => handleRegister(registerForm.email, registerForm.password, registerForm.name + " " + registerForm.surname)}
-                                className={"hover:bg-slate-500 bg-slate-700 text-white py-2 transition hover:scale-105 hover:bg-slate-600 px-8 rounded-3xl text-sm"}>Sign-Up
+                                className={"cursor-pointer hover:bg-slate-500 bg-slate-700 text-white py-2 transition hover:scale-105 hover:bg-slate-600 px-8 rounded-3xl text-sm"}>Sign-Up
                             </button>
                         </div>
                         <p
@@ -197,7 +205,7 @@ const LoginPopUp = ({setPopUp}: LoginPopUpProps) => {
                     bg-gradient-to-r from-pink-600 via-yellow-900 to-blue-700
                     text-transparent bg-clip-text
                     drop-shadow-lg
-                    select-none">
+                    select-none cursor-pointer">
                             Already registered?
                         </p>
                     </div>

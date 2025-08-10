@@ -48,7 +48,6 @@ async function UpdateBouquet(request) {
         await fs.writeFile(filePath, buffer);
         imagePath = `/uploads/${fileName}`;
     }
-    console.log("qwgqgqwgg");
     const body = {
         title, price: Number(price), description
     };
