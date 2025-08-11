@@ -10,7 +10,6 @@ export async function GET() {
         return Response.json({ error: 'Login please!' }, { status: 401 });
     }
     const sessionInfo = JSON.parse(Buffer.from(session.value, 'base64').toString('utf-8'));
-    console.log(sessionInfo);
     const user = await prisma.user.findUnique({ where: { id: sessionInfo.id } });
 
     if (!user) {
@@ -20,7 +19,8 @@ export async function GET() {
     return Response.json({
         id: user.id,
         email: user.email,
-        name: user.name
+        name: user.name,
+        isAdmin: user.isAdmin
     }, {
         status: 200
     });

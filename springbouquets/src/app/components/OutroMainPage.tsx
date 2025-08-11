@@ -8,12 +8,12 @@ const madeForItalic = localFont({
 
 import {useFadeInOnView} from "@/app/components/SpringIsHere";
 
-const OutroMainPage = () => {
+const OutroMainPage = ({backgroundColor}) => {
     const [ref, isVisible] = useFadeInOnView();
+    console.log(backgroundColor);
 
-
-    return <div style={{backgroundImage: `url(${bride.src})`, zIndex: 10000}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
-        <div ref={ref} className={`bg-white flex flex-row p-16 pt-24 pb-24 gap-16 ${isVisible ? "fade-in" : ''}`}>
+    return <div style={{backgroundImage: !backgroundColor ? `url(${bride.src})` : "none", background: backgroundColor, zIndex: 10000}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
+        <div style={{backgroundColor: backgroundColor}} ref={ref} className={`bg-white flex flex-row p-16 pt-24 pb-24 gap-16 ${isVisible ? "fade-in" : ''}`}>
             <div className={"w-fit] flex flex-col items-start justify-start"}>
                 <h3 style={{textShadow: "1px 1px 2px rgba(0,255,100, 0.1)"}}
                     className={`tracking-widest text-lg mb-4`}>CONTACT US</h3>
@@ -49,7 +49,7 @@ const OutroMainPage = () => {
                     <div className={"w-full flex flex-row items-center justify-center"}>
                         <input className={"border rounded-md h-8 mr-4 w-50 pl-2"}/>
                         <button
-                            className={`${madeForItalic.className} w-20 text-base flex justify-center items-center h-8  text-white w-fit p-2 pl-4 pr-4 rounded-sm bg-[rgb(0,50,0)]`}>
+                            className={`${madeForItalic.className} cursor-pointer transition duration-250 hover:scale-105 w-20 text-base flex justify-center items-center h-8  text-white w-fit p-2 pl-4 pr-4 rounded-sm bg-[rgb(0,50,0)]`}>
                             <p>JOIN_NOW</p>
                         </button>
                     </div>

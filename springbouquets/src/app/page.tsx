@@ -72,7 +72,7 @@ export default function Home() {
     return (
         <div style={{overflow: loginPopUpOpen ? "hidden" : "scroll"}} className={"h-screen w-screen"}>
 
-            <Login loggedIn={loggedIn} user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true}></Login>
+            <Login loggedIn={loggedIn} user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true} setLoggedIn={setLoggedIn}></Login>
             {loginPopUpOpen && <LoginPopUp setLoggedIn={setLoggedIn} setPopUp={setLoginPopUpOpen}></LoginPopUp>}
             <SlidedImage/>
             <motion.div></motion.div>

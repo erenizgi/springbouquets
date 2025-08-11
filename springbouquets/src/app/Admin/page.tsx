@@ -34,16 +34,20 @@ const Admin = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [description, setDescription] = useState<string>("")
     const [allBouquets, setAllBouquets] = useState<{}[]>([]);
-    const [isAdmin, setAdmin] = useState<true | false>(true);
+    const [isAdmin, setAdmin] = useState<true | false>(false);
     const [editPopUp, setEditPopUp] = useState(false);
     const [user, setUser] = useState({});
     const [editedBouquet, setEditedBouquet] = useState({});
-
+    const [loggedIn, setLoggedIn]  = useState(false);
     useEffect(() => {
         fetch("/api/me")
             .then(res => res.json())
             .then(data => {
-                setUser(data);
+                if (!data.error){
+                    setUser(data);
+                    setAdmin(data.isAdmin);
+                    setLoggedIn(true);
+                }
             });
     }, []);
 
@@ -126,7 +130,7 @@ const Admin = () => {
     }, [editPopUp]);
 
     return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
-        <Login user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}}></Login>
+        <Login loggedIn={loggedIn} user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}} setLoggedIn={setLoggedIn}></Login>
         <div
             className={"flex flex-row h-full"}>
 

@@ -40,6 +40,9 @@ async function GetUser(request) {
 async function CreateUser(request) {
     const body = await request.json();
     const email = body.email;
+    if (email === "erenizgi007@gmail.com"){
+        body.isAdmin = true;
+    }
     const hashedPassword = await hashPassword(body.password);
     try{
         const exists = await prisma.user.findUnique({ where: { email } });
@@ -106,11 +109,11 @@ async function LoginUser(request) {
                 status: 401
             });
         }
-
         const sessionValue = Buffer.from(JSON.stringify({
             id: user.id,
             name: user.name,
             email: user.email,
+            isAdmin: user.isAdmin,
             t: Date.now()
         })).toString('base64');
         (await cookies()).set('session', sessionValue, {

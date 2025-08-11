@@ -35,9 +35,9 @@ const OurWorkshops = () => {
                             <h3>Workshop</h3>
                         </div>
                         <p>I&#39;m a tagline. Click here to add your own text and edit me.</p>
-                        <button
-                            className={`${madeForItalic.className} transition duration-200 hover:scale-105 text-white w-fit p-2 pl-4 pr-4 text-base mt-4 rounded-sm hover:bg-[rgb(0,70,40)] bg-[rgb(0,50,0)] animate-pulse cursor-pointer`}>Book_It
-                        </button>
+                        {/*<button*/}
+                        {/*    className={`${madeForItalic.className} transition duration-200 hover:scale-105 text-white w-fit p-2 pl-4 pr-4 text-base mt-4 rounded-sm hover:bg-[rgb(0,70,40)] bg-[rgb(0,50,0)] animate-pulse cursor-pointer`}>Book_It*/}
+                        {/*</button>*/}
 
 
                     </div>
