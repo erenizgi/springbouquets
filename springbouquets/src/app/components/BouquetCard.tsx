@@ -8,11 +8,11 @@ const madeForItalic = localFont({
     weight: "200",
 });
 
-const BouquetCard = ({bouquet}) => {
+const BouquetCard = ({bouquet, customStyle}) => {
     const containerRef = useRef();
 
 
-    return <div className={"flex flex-col items-center justify-start gap-8 h-fit group"}>
+    return <div style={customStyle ? {...customStyle} : {}} className={"flex flex-col items-center justify-start gap-8 h-fit group"}>
         <Link
              className={"group-hover:brightness-110 transition duration-500 group-hover:rotate-1 cursor-pointer rounded-sm relative w-full aspect-[3/4] overflow-hidden"}
              href={`/products/${bouquet.id}`}>

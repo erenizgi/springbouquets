@@ -42,7 +42,7 @@ const EditProducts = ({bouquets, fetchBouquets, setEditPopUp, setEditedBouquet})
                         setEditedBouquet(bouquet);
                         setEditPopUp(true);
                     }}
-                    className={`w-[40%] transition duration-250 hover:scale-105 cursor-pointer ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
+                    className={`w-[40%] transition duration-250 hover:scale-105 cursor-pointer ${madeForBold.className} bg-[rgba(224,134,0,1)] p-2 px-8 text-[rgba(255,255,255,1)] flex items-center justify-center rounded-md`}>
                     <p>EDIT</p>
                 </div>
                 <div

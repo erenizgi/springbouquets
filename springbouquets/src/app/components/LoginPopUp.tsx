@@ -71,7 +71,7 @@ const LoginPopUp = ({setPopUp, setLoggedIn}: LoginPopUpProps) => {
     }
 
     return <div style={{zIndex: 10000}}
-             className={"flex flex-col items-center justify-center absolute w-screen h-screen bg-[rgba(0,0,0,.5)]"}>
+             className={"top-0 flex flex-col items-center justify-center absolute w-screen h-screen bg-[rgba(0,0,0,.5)]"}>
                 {loginOrRegister === "login" && <motion.div
                     key="login"
                     variants={popupVariants}

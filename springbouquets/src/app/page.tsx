@@ -49,6 +49,7 @@ const fetch50Bouquets = async (setBouquets?: (value: (((prevState: {}[]) => {}[]
 
 export default function Home() {
     const [isAdmin, setAdmin] = useState(true);
+    const [cartPopUpPage, setCartPopUpPage] = useState(false);
     const [bouquets, setBouquets] = useState<{}[]>([])
     const [loggedIn, setLoggedIn] = useState(false);
     const [loginPopUpOpen, setLoginPopUpOpen] = useState<boolean>(false);
@@ -72,7 +73,7 @@ export default function Home() {
     return (
         <div style={{overflow: loginPopUpOpen ? "hidden" : "scroll"}} className={"h-screen w-screen"}>
 
-            <Login loggedIn={loggedIn} user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true} setLoggedIn={setLoggedIn}></Login>
+            <Login setCartPopUpPage={setCartPopUpPage} cartPopUpPage={cartPopUpPage} loggedIn={loggedIn} user={user} setPopUp={setLoginPopUpOpen} customStyle={{position: "fixed", zIndex: "500"}} isAdmin={true} setLoggedIn={setLoggedIn}></Login>
             {loginPopUpOpen && <LoginPopUp setLoggedIn={setLoggedIn} setPopUp={setLoginPopUpOpen}></LoginPopUp>}
             <SlidedImage/>
             <motion.div></motion.div>
