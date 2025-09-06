@@ -39,6 +39,7 @@ const Admin = () => {
     const [user, setUser] = useState({});
     const [editedBouquet, setEditedBouquet] = useState({});
     const [loggedIn, setLoggedIn]  = useState(false);
+    const [allUsers, setAllUsers] = useState([]);
     useEffect(() => {
         fetch("/api/me")
             .then(res => res.json())
@@ -132,16 +133,17 @@ const Admin = () => {
     return <div className={"flex flex-col w-screen h-full bg-slate-100"}>
         <Login loggedIn={loggedIn} user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={isAdmin} setPopUp={() => {}} setLoggedIn={setLoggedIn}></Login>
         <div
-            className={"flex flex-row h-full"}>
-
+            className={"flex flex-row"}
+            style={{overflowX: "hidden"}}>
             {editPopUp && <EditProductPopUp updateAdminPage={() => fetch50Bouquets(setAllBouquets)} bouquet={editedBouquet} setEditPopUp={setEditPopUp}></EditProductPopUp>}
             <AddProduct submit={async (e: React.FormEvent<Element>) => {
                 await handleSubmit(e)
             }} description={description} setDescription={setDescription} inputClass={inputClass} title={title} setTitle={setTitle} price={price} setPrice={setPrice} handleFrameClick={handleFrameClick} handleFileChange={handleFileChange} imgUrl={imgUrl} inputRef={inputRef}></AddProduct>
             <EditProducts setEditedBouquet={setEditedBouquet} setEditPopUp={setEditPopUp} fetchBouquets={async () => await fetch50Bouquets(setAllBouquets)} bouquets={allBouquets}></EditProducts>
         </div>
+        <div>
 
-
+        </div>
     </div>
 }
 

@@ -36,6 +36,44 @@ export async function POST(req) {
     }
 }
 
+export async function PUT(req) {
+    try {
+
+        const { userId, item } = await req.json();
+        console.log(item);
+        if (!userId || !item) {
+            return Response.json({ error: "Need userID and Items!" }, { status: 400 });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { cart: true }
+        });
+
+        let cart = [];
+        if (user && Array.isArray(user.cart)) {
+            cart = [...user.cart];
+        }
+
+        const foundIdx = cart.findIndex((i) => i.productId === item.productId);
+        if (foundIdx > -1) {
+            cart[foundIdx] = { ...cart[foundIdx], ...item };
+        } else {
+            return Response.json({ error: "Product not in cart. Use add endpoint!" }, { status: 404 });
+        }
+
+        const updatedUser = await prisma.user.update({
+            where: { id: parseInt(userId) },
+            data: { cart }
+        });
+
+        return Response.json({ cart: updatedUser.cart });
+    } catch (err) {
+        console.error("CART UPDATE ERROR", err);
+        return Response.json({ error: "Something went wrong." }, { status: 500 });
+    }
+}
+
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");

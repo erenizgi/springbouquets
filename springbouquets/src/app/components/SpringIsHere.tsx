@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import CSS from "csstype";
 import localFont from "next/font/local";
 import {colorful, textShadow, textShadowWhite} from "@/types/page";
+import Link from "next/link";
 
 const BAHARGELDI: CSS.Properties = {
     fontSize: "4rem",
@@ -66,7 +67,12 @@ const SpringIsHere = () => {
         <div className="w-fit">
             <h1 style={{fontSize: "8rem", ...textShadowWhite}} className={`text-gray-200 ${colorful} from-yellow-300 via-blue-700 to-pink-400`}>HERE</h1>
         </div>
-        <button className={`${madeForItalic.className} w-fit p-2 pl-8 pr-8 text-white text-base mt-4 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)] cursor-pointer transition duration-200 hover:scale-105`}>Shop_Now</button>
+        <Link href={"/ViewAll"}>
+            <button
+                className={`${madeForItalic.className} w-fit p-2 pl-8 pr-8 text-white text-base mt-4 rounded-sm bg-[rgb(0,50,0)] hover:bg-[rgb(0,70,40)] cursor-pointer transition duration-200 hover:scale-105`}>Shop_Now
+            </button>
+
+        </Link>
     </div>)
 }
 

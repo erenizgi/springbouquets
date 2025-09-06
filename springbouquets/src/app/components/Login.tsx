@@ -65,6 +65,32 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
         router.push("/")
     }
 
+    async function updateCart(userId, item) {
+        try {
+
+            const res = await fetch('/api/user/cart', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, item }),
+            });
+            console.log(res);
+            if (!res.ok) {
+                const error = await res.json();
+                throw new Error(error?.error || 'Cart update failed!');
+            }
+
+            const data = await res.json();
+            return data.cart;
+        } catch (err) {
+            console.error('Cart update error:', err.message);
+            throw err;
+        }
+    }
+
+
+
     const handleLogout = async () => {
         const response = await fetch('/api/user/logout', {method: 'POST'});
         if (response.status === 200) {
@@ -85,6 +111,7 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
         const cart = await getUserCart(user.id);
         setCartItems(cart.cart);
         console.log(cart);
+        setUserPopUp(false);
         setCartPopUpPage(true);
     }
 
@@ -100,7 +127,10 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
             </div> : null}
             {loggedIn && <div className={"relative transition-all duration-300"}>
                 <Image
-                    onClick={() => setUserPopUp(prev => !prev)}
+                    onClick={() => {
+                        setCartPopUpPage(false);
+                        setUserPopUp(true);
+                    }}
                     className={"h-8 w-auto ml-4 mr-4 hover:scale-105 cursor-pointer transition duration-250 "}
                     src={userIcon} alt={"user-icon"}></Image>
                 {userPopUp && <div
@@ -148,9 +178,15 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
                                             <div className={"flex items-end w-full flex-col"}>
                                                 <h3 className={"text-lg"}>Quantity</h3>
                                                 <div className={"gap-4 flex w-full items-center justify-end"} style={{}}>
-                                                    <p className={"text-xl cursor-pointer"}>-</p>
+                                                    <p className={"text-xl cursor-pointer"} onClick={async () => {
+                                                        const data = await updateCart(user.id, {...item, count: item.count-1});
+                                                        setCartItems(data);
+                                                    }}>-</p>
                                                     <p className={"text-xl"}>{item.count}</p>
-                                                    <p className={"text-xl cursor-pointer"}>+</p>
+                                                    <p className={"text-xl cursor-pointer"} onClick={async () => {
+                                                        const data = await updateCart(user.id, {...item, count: item.count+1});
+                                                        setCartItems(data);
+                                                    }}>+</p>
                                                 </div>
 
                                             </div>
@@ -163,11 +199,14 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
                             </div>) : <div>
                                 Your cart is empty.
                             </div>}
-                            <div className={"w-full flex items-center justify-end p-2"}>
-                                <div className={"w-full rounded-lg h-full bg-slate-100 flex items-center justify-center"}>
-                                    <button className={`${colorful} text-lg from-slate-800 via-yellow-600 to-blue-800 p-2 px-4 bg-slate-100 text-slate-900 rounded-lg transition-all duration-250 hover:scale-115 cursor-pointer`}>BUY_NOW</button>
+                            {cartItems?.length > 0 && <div className={"w-full flex items-center justify-end p-2"}>
+                                <div
+                                    className={"w-full rounded-lg h-full bg-slate-100 flex items-center justify-center"}>
+                                    <button
+                                        className={`${colorful} text-lg from-slate-800 via-yellow-600 to-blue-800 p-2 px-4 bg-slate-100 text-slate-900 rounded-lg transition-all duration-250 hover:scale-115 cursor-pointer`}>BUY_NOW
+                                    </button>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                     </div>
 
@@ -189,8 +228,6 @@ const Login = ({customStyle, setPopUp, setLoggedIn, loggedIn, cartPopUpPage, set
                 onClick={handleCartClick}
                 className={"h-8 w-auto ml-4 mr-4 hover:scale-105 cursor-pointer transition duration-250"} src={cart}
                 alt={"cart-icon"}></Image>}
-            <Image className={"hover:scale-105 cursor-pointer transition duration-250 h-6 w-auto ml-4 mr-4"}
-                   src={settings} alt={"settings-icon"}></Image>
         </div>
     </div>
 }

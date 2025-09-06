@@ -43,7 +43,6 @@ const ProductPage = ({params}) => {
             .then(res => res.json())
             .then(data => {
                 setBouquet(data);
-                console.log(data);
             });
     }, []);
 

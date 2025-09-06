@@ -33,7 +33,7 @@ async function deleteBouquet({ id, title }: {id: number, title?: string | undefi
 
 
 const EditProducts = ({bouquets, fetchBouquets, setEditPopUp, setEditedBouquet}) => {
-    return <div className={"grid grid-cols-4 gap-4 p-16 gap-y-16 max-w-[50%]"}>
+    return <div className={"grid grid-cols-4 gap-4 p-16 gap-y-16 max-w-[50%] h-[80vh] overflow-scroll overflow-x-hidden"}>
         {bouquets.map((bouquet: Bouquet) => <div key={bouquet.id}>
             <BouquetCard bouquet={bouquet}></BouquetCard>
             <div className={"flex flex-row items-center justify-center gap-2 mt-4 h-fit"}>

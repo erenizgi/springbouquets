@@ -17,7 +17,8 @@ const madeForItalic = localFont({
 const ViewAll = () => {
 
     const [maxMinPrices, setMaxMinPrices] = useState([0, 0]);
-
+    const [cartPopUpPage, setCartPopUpPage] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState({});
     const [allBouquets, setAllBouquets] = useState([]);
     useEffect(() => {
@@ -53,7 +54,7 @@ const ViewAll = () => {
     }, [allBouquets]);
 
     return <div  className={"flex items-center justify-center flex-col"}>
-        <Login user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={true} setPopUp={() => {}}></Login>
+        <Login user={user} customStyle={{position: "relative", zIndex: "100"}} isAdmin={true} setPopUp={() => {}} setLoggedIn={setLoggedIn} loggedIn={loggedIn} cartPopUpPage={cartPopUpPage} setCartPopUpPage={setCartPopUpPage}></Login>
         <div style={{backgroundImage: `url(${BouquetWorkshop.src})`}}  className={"flex items-center justify-center border bg-slate-100 border-[rgba(0,0,0,0.2)] rounded-lg w-[100%] h-fit min-h-100 mb-128"}>
             <div className={"w-[60%] py-32 pb-64 bg-slate-100 p-16 rounded-sm my-32"}>
                 <h3 className={`text-3xl ${madeForItalic.className} mb-4`}>Our Store</h3>

@@ -10,7 +10,6 @@ import {useFadeInOnView} from "@/app/components/SpringIsHere";
 
 const OutroMainPage = ({backgroundColor}) => {
     const [ref, isVisible] = useFadeInOnView();
-    console.log(backgroundColor);
 
     return <div style={{backgroundImage: !backgroundColor ? `url(${bride.src})` : "none", background: backgroundColor, zIndex: 10000}} className={"w-full bg-cover bg-fixed h-fit p-45 pl-120 pr-120"}>
         <div style={{backgroundColor: backgroundColor}} ref={ref} className={`bg-white flex flex-row p-16 pt-24 pb-24 gap-16 ${isVisible ? "fade-in" : ''}`}>
